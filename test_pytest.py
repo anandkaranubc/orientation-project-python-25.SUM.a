@@ -43,7 +43,7 @@ def test_experience():
     response = app.test_client().get('/resume/experience')
     assert response.status_code == 200
     assert len(response.json) == initial_length + 1
-    
+
     # Convert response data to dict for comparison
     experience_dict = {
         "title": response.json[item_id].get('title'),
@@ -77,11 +77,11 @@ def test_get_experience_by_index():
                                      json=example_experience)
     assert post_response.status_code == 201
     item_id = post_response.json['index']
-    
+
     # Then retrieve it by index
     response = app.test_client().get(f'/resume/experience/{item_id}')
     assert response.status_code == 200
-    
+
     # Convert response data to dict for comparison
     experience_dict = {
         "title": response.json.get('title'),

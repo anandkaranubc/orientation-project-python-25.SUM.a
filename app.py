@@ -62,16 +62,18 @@ def experience():
 
     return jsonify({"error": "Method not allowed"}), 405
 
+
 @app.route('/resume/experience/<int:index>', methods=['GET'])
 def get_experience_by_index(index):
     '''
     Get a specific experience by index
     '''
     try:
-        experience = data['experience'][index]
-        return jsonify(experience)
+        experience_item = data['experience'][index]
+        return jsonify(experience_item)
     except IndexError:
         return jsonify({"error": "Experience not found"}), 404
+
 
 @app.route('/resume/education', methods=['GET', 'POST'])
 def education():
