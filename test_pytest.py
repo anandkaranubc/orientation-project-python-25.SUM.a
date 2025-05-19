@@ -55,6 +55,39 @@ def test_education():
     assert response.json[item_id] == example_education
 
 
+def test_delete_education():
+    '''
+    Add and delete an education entry by index.
+
+    Check that the entry is deleted successfully and the response is correct.
+    '''
+    example_education = {
+        "course": "Computer Science",
+        "school": "UBC",
+        "start_date": "January 2022",
+        "end_date": "June 2026",
+        "grade": "90%",
+        "logo": "example-logo.png"
+    }
+
+    client = app.test_client()
+
+    # Add new education:
+    post_resp = client.post('/resume/education', json=example_education)
+    assert post_resp.status_code == 200
+    item_id = post_resp.json['id']
+
+    # Delete the education using the ID:
+    del_resp = client.delete(f'/resume/education/{item_id}')
+    assert del_resp.status_code == 200
+    assert del_resp.json['deleted'] is True
+
+    # Delete again to check if it fails:
+    del_resp = client.delete(f'/resume/education/{item_id}')
+    assert del_resp.status_code == 404
+    assert del_resp.json['error'] == "Index out of range"
+
+
 def test_skill():
     '''
     Add a new skill and then get all skills. 
