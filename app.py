@@ -66,6 +66,28 @@ def education():
     return jsonify({})
 
 
+@app.route('/resume/education/<int:index>', methods=['DELETE'])
+def delete_education(index):
+    """
+    Deletes an education entry at the specified index.
+
+    Parameters
+    ----------
+    index : int
+        The index of the education entry to delete.
+
+    Returns
+    -------
+    Response
+        JSON response indicating success (with `deleted: True`) or
+        failure (with an error message and 404 status code).
+    """
+    if 0 <= index < len( data[ "education" ] ):
+        data[ "education" ].pop( index )
+        return jsonify( { "deleted": True } ), 200
+    return jsonify( { "error": "Index out of range" } ), 404
+
+
 @app.route('/resume/skill', methods=['GET', 'POST'])
 def skill():
     '''
