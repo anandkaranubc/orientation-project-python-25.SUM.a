@@ -45,12 +45,33 @@ def experience():
     Handle experience requests
     '''
     if request.method == 'GET':
-        return jsonify()
+        return jsonify(data['experience'])
 
     if request.method == 'POST':
-        return jsonify({})
+        experience_data = request.get_json()
+        new_experience = Experience(
+            experience_data['title'],
+            experience_data['company'],
+            experience_data['start_date'],
+            experience_data['end_date'],
+            experience_data['description'],
+            experience_data['logo']
+        )
+        data['experience'].append(new_experience)
+        return jsonify({"index": len(data['experience']) - 1}), 201
 
-    return jsonify({})
+    return jsonify({"error": "Method not allowed"}), 405
+
+@app.route('/resume/experience/<int:index>', methods=['GET'])
+def get_experience_by_index(index):
+    '''
+    Get a specific experience by index
+    '''
+    try:
+        experience = data['experience'][index]
+        return jsonify(experience)
+    except IndexError:
+        return jsonify({"error": "Experience not found"}), 404
 
 @app.route('/resume/education', methods=['GET', 'POST'])
 def education():
