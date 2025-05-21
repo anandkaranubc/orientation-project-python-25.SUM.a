@@ -81,7 +81,7 @@ def test_delete_education():
     # Delete the education using the ID:
     del_resp = client.delete(f'/resume/education/{item_id}')
     assert del_resp.status_code == 200
-    assert del_resp.json['deleted'] is True
+    assert del_resp.json['message'] == "Education has been deleted"
 
     # Delete again to check if it fails:
     del_resp = client.delete(f'/resume/education/{item_id}')
