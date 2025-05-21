@@ -37,7 +37,7 @@ def test_experience():
     post_response = app.test_client().post('/resume/experience',
                                      json=example_experience)
     assert post_response.status_code == 201
-    item_id = post_response.json['index']
+    item_id = post_response.json['id']
 
     # Get updated experiences list
     response = app.test_client().get('/resume/experience')
@@ -59,9 +59,9 @@ def test_experience():
     assert item_id == len(response.json) - 1
 
 
-def test_get_experience_by_index():
+def test_get_experience_by_id():
     '''
-    Get a specific experience by its index
+    Get a specific experience by its id
     '''
     example_experience = {
         "title": "Software Developer",
@@ -76,9 +76,9 @@ def test_get_experience_by_index():
     post_response = app.test_client().post('/resume/experience',
                                      json=example_experience)
     assert post_response.status_code == 201
-    item_id = post_response.json['index']
+    item_id = post_response.json['id']
 
-    # Then retrieve it by index
+    # Then retrieve it by id
     response = app.test_client().get(f'/resume/experience/{item_id}')
     assert response.status_code == 200
 

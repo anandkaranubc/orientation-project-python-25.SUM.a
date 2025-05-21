@@ -42,13 +42,21 @@ def hello_world():
 @app.route('/resume/experience', methods=['GET', 'POST'])
 def experience():
     '''
-    Handle experience requests
+    Handles experience requests
+    This function handles two types of HTTP requests:
+    - GET: Retrieves all experience data.
+    - POST: Adds new experience data.
     '''
     if request.method == 'GET':
-        return jsonify(data['experience'])
+        return jsonify(data['experience']), 200
 
     if request.method == 'POST':
         experience_data = request.get_json()
+        # Validate the json data
+        if not all(key in experience_data for key in ['title', 'company', 'start_date',
+                                                      'end_date', 'description', 'logo']):
+            return jsonify({"error": "Missing required fields"}), 400
+
         new_experience = Experience(
             experience_data['title'],
             experience_data['company'],
@@ -58,7 +66,7 @@ def experience():
             experience_data['logo']
         )
         data['experience'].append(new_experience)
-        return jsonify({"index": len(data['experience']) - 1}), 201
+        return jsonify({"id": len(data['experience']) - 1}), 201
 
     return jsonify({"error": "Method not allowed"}), 405
 
