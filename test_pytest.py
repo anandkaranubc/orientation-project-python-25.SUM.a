@@ -73,6 +73,7 @@ def test_delete_education():
     client = app.test_client()
 
     # Add new education:
+    # TODO: Implement the '/resume/education' POST route in `app.py` before running this test.
     post_resp = client.post('/resume/education', json=example_education)
     assert post_resp.status_code == 200
     item_id = post_resp.json['id']

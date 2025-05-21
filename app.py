@@ -84,7 +84,7 @@ def delete_education(index):
     """
     if 0 <= index < len( data[ "education" ] ):
         data[ "education" ].pop( index )
-        return jsonify( { "deleted": True } ), 200
+        return jsonify( { "message": "Education has been deleted" } ), 200
     return jsonify( { "error": "Index out of range" } ), 404
 
 
