@@ -54,14 +54,33 @@ def experience():
 
 @app.route('/resume/education', methods=['GET', 'POST'])
 def education():
-    '''
-    Handles education requests
-    '''
+    """
+    Handle GET and POST requests for education entries.
+
+    Returns
+    -------
+    Response
+        JSON response containing all education entries (GET) or the index of a new entry (POST).
+    """
     if request.method == 'GET':
         return jsonify({})
 
     if request.method == 'POST':
-        return jsonify({})
+        content = request.json
+        if not content:
+            return jsonify({"error": "No data provided"}), 400
+        if not all(key in content for key in ['course', 'school', 'start_date', 'end_date', 'grade', 'logo']):
+            return jsonify({"error": "Missing required fields"}), 400
+        new_education = Education(
+            content['course'],
+            content['school'],
+            content['start_date'],
+            content['end_date'],
+            content['grade'],
+            content['logo']
+        )
+        data['education'].append(new_education)
+        return jsonify({"id": len(data['education']) - 1}), 201
 
     return jsonify({})
 
