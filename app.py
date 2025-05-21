@@ -67,10 +67,19 @@ def education():
 
     if request.method == 'POST':
         content = request.json
+
+        # Check if the content is empty:
         if not content:
             return jsonify({"error": "No data provided"}), 400
-        if not all(key in content for key in ['course', 'school', 'start_date', 'end_date', 'grade', 'logo']):
+
+        # Check if all required fields are present:
+        required_fields = [
+            'course', 'school', 'start_date', 'end_date', 'grade', 'logo'
+        ]
+        if not all( key in content for key in required_fields):
             return jsonify({"error": "Missing required fields"}), 400
+
+        # Create a new Education object, add it to the data, and return the index:
         new_education = Education(
             content['course'],
             content['school'],
