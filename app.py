@@ -86,12 +86,19 @@ def get_experience_by_index(index):
 @app.route('/resume/education', methods=['GET', 'POST'])
 def education():
     """
-    Handle GET and POST requests for education entries.
+    Handles GET and POST requests for education entries.
+
+    GET: Returns all stored education entries.
+    POST: Adds a new education entry to the system after validating required fields.
 
     Returns
     -------
     Response
-        JSON response containing all education entries (GET) or the index of a new entry (POST).
+        JSON response containing:
+        - All education entries with status 200 (on GET).
+        - The index of the newly added entry with status 201 (on valid POST).
+        - An error message with status 400 if POST data is missing or invalid.
+        - An empty JSON object for unsupported methods (though all are handled).
     """
     if request.method == 'GET':
         return jsonify({})
