@@ -98,7 +98,7 @@ def education():
         - All education entries with status 200 (on GET).
         - The index of the newly added entry with status 201 (on valid POST).
         - An error message with status 400 if POST data is missing or invalid.
-        - An empty JSON object for unsupported methods (though all are handled).
+        - An error message with status 405 if the HTTP method is not allowed.
     """
     if request.method == 'GET':
         return jsonify({})
