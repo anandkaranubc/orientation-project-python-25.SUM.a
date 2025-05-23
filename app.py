@@ -108,7 +108,7 @@ def education():
 
         # Check if the content is empty:
         if not content:
-            return jsonify({"error": "No data provided"}), 400
+            return jsonify({"error": "Bad request"}), 400
 
         # Check if all required fields are present:
         required_fields = [
